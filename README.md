@@ -1,6 +1,6 @@
 #  [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
 
-> Neopronoun aggregation tool
+> [Neo]pronoun aggregation tool
 
 This is a tool for aggregating English \[neo\]pronouns OTF or for storage in a cutesy little database. Pronouns are "discovered" from a list of websites using a regular expression (basically some hella wicked automagic). This could be used in a web application to allow users to pick cool pronouns for their profiles. It was developed for use in a future projects of mine to allow better user pronoun selection options.
 
