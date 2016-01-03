@@ -75,7 +75,10 @@ PronounGenius.prototype.forceDownload = function (cb) {
       if (!error && response.statusCode == 200) {
         var $ = cheerio.load(body);
         $('a').attr('href', '');
-        var content = $('body').text();
+        var content = body;
+        if($('body').text() !== ""){
+          content = $('body').text();
+        }
         if ($("#mw-content-text").text() !== "") {
           content = $("#mw-content-text").text();
         }
@@ -137,14 +140,12 @@ PronounGenius.prototype.forceDownload = function (cb) {
               }
             }
             if(isMatch) {
-              console.log("WOOl!");
               console.log(match);
               console.log(this.pronounData[i]);
 
               for (j = 0; j < this.pronounData[i].length; j++) {
                 if(this.pronounData[i][j] == "" && match[j] !== ""){
                   this.pronounData[i][j] = match[j];
-                  console.log("WOOOOOO!")
                 }
               }
               matchesCounter.count();
