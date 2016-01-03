@@ -3,7 +3,7 @@
 var meow = require('meow');
 var pronounGenius = require('./');
 
-var cli = meow({
+meow({
   help: [
     'Usage',
     '  pronoun-genius <input>',

@@ -1,21 +1,15 @@
 'use strict';
 var jsonfile = require('jsonfile');
-var util = require('util');
+//var util = require('util');
 var request = require('request');
 var cheerio = require('cheerio');
 var isNumeric = require("isnumeric");
 
-const DEBUG = true;
+var DEBUG = true;
 function debug(str) {
-  if (DEBUG) console.log(str);
-}
-function arraysEqual(arr1, arr2) {
-  for (var i = arr1.length; i--;) {
-    if ((arr1[i] !== "" && arr2[i] !== "") && arr1[i] !== arr2[i])
-      return false;
+  if (DEBUG) {
+    console.log(str);
   }
-
-  return true;
 }
 var Counter = function(amount, cb){
   this.amount = amount;
@@ -23,13 +17,15 @@ var Counter = function(amount, cb){
 };
 Counter.prototype.count = function(){
   this.amount--;
-  if(this.amount == 0) this.cb();
+  if(this.amount === 0){
+    this.cb();
+  }
 };
 var PronounGenius = function () {
   this.pronounData = null;
 };
 PronounGenius.prototype.discover = function (cb, force) {
-  if (this.pronounData == null || force === true) {
+  if (this.pronounData === null || force === true) {
     jsonfile.readFile(__dirname + '/pronoun-data.json', (function (err, obj) {
       if (!err) {
         this.pronounData = obj;
@@ -63,7 +59,9 @@ PronounGenius.prototype.forceDownload = function (cb) {
     debug("ALL SITES DONE");
     //console.log(this.pronounData);
     jsonfile.writeFile(__dirname + '/pronoun-data.json', this.pronounData, function (err) {
-      if (err) console.error(err);
+      if (err){
+        console.error(err);
+      }
       cb(false);
     });
   }).bind(this));
@@ -72,7 +70,7 @@ PronounGenius.prototype.forceDownload = function (cb) {
   this.pronounData = [];
   sites.map((function (site) {
     request(site, (function (error, response, body) {
-      if (!error && response.statusCode == 200) {
+      if (!error && response.statusCode === 200) {
         var $ = cheerio.load(body);
         $('a').attr('href', '');
         var content = body;
@@ -121,11 +119,11 @@ PronounGenius.prototype.forceDownload = function (cb) {
           }
 
           // Try to get into the five string format
-          if (match.length == 4) {
+          if (match.length === 4) {
             match.push(match[3]);
             match[3] = "";
           }
-          else if (match.length == 3) {
+          else if (match.length === 3) {
             match.push("");
             match.push(match[2]);
             match[2] = "";
@@ -144,7 +142,7 @@ PronounGenius.prototype.forceDownload = function (cb) {
               console.log(this.pronounData[i]);
 
               for (j = 0; j < this.pronounData[i].length; j++) {
-                if(this.pronounData[i][j] == "" && match[j] !== ""){
+                if(this.pronounData[i][j] === "" && match[j] !== ""){
                   this.pronounData[i][j] = match[j];
                 }
               }
